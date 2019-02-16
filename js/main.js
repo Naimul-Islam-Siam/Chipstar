@@ -7,9 +7,13 @@ var gameDraw = false;
 var winner = null;
 var count = 0;
 var color = "green";
+var score1 = 0;
+var score2 = 0;
 var message = document.querySelector(".message");
 var btn1 = document.querySelector(".btn-1");
 var btn2 = document.querySelector(".btn-2");
+var btn1ScoreDisplay = document.querySelector(".btn-score-1");
+var btn2ScoreDisplay = document.querySelector(".btn-score-2");
 
 btn1.classList.add("selected");
 
@@ -36,9 +40,9 @@ btn2.addEventListener("click",function(){
 for(let i = 0; i < box.length; i++){
 	box[i].addEventListener("click",function(){
 		if(result !== true && gameDraw !== true){
+			count++;
 			if(box[i+35] !== undefined && box[i+35].style.backgroundColor == ''){
 				box[i+35].style.backgroundColor = color;
-				count++;
 
 				currentBox = box[i+35].id;
 				findPosition(currentBox);
@@ -346,6 +350,7 @@ function checkLeftSide(a, b){
 			result = true;
 			winner = color;
 			message.textContent = "Congrats "+ winner + " you won!";
+			winnerScore(winner);
 		}
 		return result;
 	}
@@ -362,6 +367,7 @@ function checkDownSide(a, b){
 			result = true;
 			winner = color;
 			message.textContent = "Congrats "+ winner + " you won!";
+			winnerScore(winner);
 		}
 		return result;
 	}
@@ -378,6 +384,7 @@ function checkDownRightDiagonal(a, b){
 			result = true;
 			winner = color;
 			message.textContent = "Congrats "+ winner + " you won!";
+			winnerScore(winner);
 		}
 		return result;
 	}
@@ -394,6 +401,7 @@ function checkDownLeftDiagonal(a, b){
 			result = true;
 			winner = color;
 			message.textContent = "Congrats "+ winner + " you won!";
+			winnerScore(winner);
 		}
 		return result;
 	}
@@ -403,10 +411,24 @@ function checkDraw(i){
 	if(i == 42){
 		gameDraw = true;
 		message.textContent = "Match Draw!";
+		btn1.classList.remove("selected");
+		btn2.classList.remove("selected");
 	}
 	else{
 		gameDraw = false;
 	}
 
 	return gameDraw;
+}
+
+function winnerScore(winner){
+	if(winner === "green"){
+		score1++;
+		btn1ScoreDisplay.textContent = score1;
+	}
+
+	if(winner === "red"){
+		score2++;
+		btn2ScoreDisplay.textContent = score2;
+	}	
 }
