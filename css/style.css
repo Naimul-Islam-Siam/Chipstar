@@ -4,17 +4,94 @@
 	box-sizing: border-box;
 }
 
+body {
+	font-family: "Montserrat";
+}
+
+h1 {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+.btn-container {
+	/*background-color: black;*/
+	height: 80px;
+	position: relative;
+}
+
+.btn {
+	display: block;
+	padding: 15px;
+	width: 200px;
+	cursor: pointer;
+	border-radius: 30px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.score-btn {
+	font-size: 18px;
+	background-color: #f7f5f2;
+	outline: none;
+	position: absolute;
+	border: 2px solid #f7f5f2;
+}
+
+.btn-1 {
+	top : 14px;
+	left: 330px;
+}
+
+.btn-2 {
+	top: 14px;
+	right: 330px;
+}
+
+.btn-name {
+	width: 20px;
+	border-radius: 50%;
+	/*height: 22px;*/
+	float: left;
+}
+
+.btn-score{
+	float: right;
+}
+
+.btn-name-1 {
+	color: green;
+	background-color: green;
+}
+
+.btn-name-2 {
+	color: red;
+	background-color: red;
+}
+
 table {
 	margin: 10px auto;
-	background-color: yellow;
-	border: 10px solid brown;
+ 	background-image: linear-gradient(to bottom right, #fce205, #ffcc00);	
+ 	border: 10px solid #f39c12;
 	padding: 10px; 
+	border-radius: 25px;
 }
 
 .box {
 	background-color: white;
 	width: 70px;
 	height: 70px;
-	border: 2px solid black;
-	border-radius: 50%; 
+	border: 5px solid #f39c12;
+	border-radius: 50%;
+	box-shadow: 0 10px 20px rgb(243,156,18,0.5);
+	/*box-shadow:inset 0px 0px 0px 2px rgba(0, 0, 0, 0.2); */
 }
+
+.selected {
+	border-bottom: 7px solid #f39c12;
+}
+
+/*(linear, left top, right bottom, from(rgba(126, 213, 111, 0.8)), to(rgba(40, 180, 131, 0.8)));*/
+/*#fce205*/
+/*#ff5e31*/

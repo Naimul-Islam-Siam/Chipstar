@@ -2,47 +2,44 @@ var box = document.querySelectorAll(".box");
 var result = false;
 var currentBox;
 var selectedBox;
-var rightMost;
-var upRightMost;
-var upLeftMost;
 var gameOver = false;
 var gameDraw = false;
+var winner = null;
+var count = 0;
 var color = "green";
+var message = document.querySelector(".message");
+var btn1 = document.querySelector(".btn-1");
+var btn2 = document.querySelector(".btn-2");
+
+btn1.classList.add("selected");
 
 for(var i = 0; i < box.length; i++){
 	box[i].style.backgroundColor = '';
 }
 
+btn1.addEventListener("click",function(){
+	if(count < 1){
+		color = "green";
+		btn1.classList.add("selected");
+		btn2.classList.remove("selected");
+	}
+});
+
+btn2.addEventListener("click",function(){
+	if(count < 1){
+		color = "red";
+		btn2.classList.add("selected");
+		btn1.classList.remove("selected");
+	}
+});
+
 for(let i = 0; i < box.length; i++){
 	box[i].addEventListener("click",function(){
-		if(result !== true){
-			if(box[i+42] !== undefined && box[i+42].style.backgroundColor === ''){
-				box[i+42].style.backgroundColor = color;
-				switchColor();
-				currentBox = box[i+42].id;
-				findPosition(currentBox);
-				selectedBox = Obj();
-
-				findRight(selectedBox.row, selectedBox.column);
-				findUpRight(selectedBox.row, selectedBox.column);
-				findUpLeft(selectedBox.row, selectedBox.column);
-
-				if(result !== true){
-					checkDownSide(selectedBox.row, selectedBox.column);
-				}
-				if(result !== true){
-					checkLeftSide(rightObj().rowR, rightObj().columnR);	
-				}
-				if(result !== true){
-					checkDownLeftDiagonal(upRightObj().rowUR, upRightObj().columnUR);
-				}
-				if(result !== true){
-					checkDownRightDiagonal(upLeftObj().rowUL, upLeftObj().columnUL);
-				}
-			}
-			else if(box[i+35] !== undefined && box[i+35].style.backgroundColor == ''){
+		if(result !== true && gameDraw !== true){
+			if(box[i+35] !== undefined && box[i+35].style.backgroundColor == ''){
 				box[i+35].style.backgroundColor = color;
-				switchColor();
+				count++;
+
 				currentBox = box[i+35].id;
 				findPosition(currentBox);
 				selectedBox = Obj();
@@ -63,10 +60,13 @@ for(let i = 0; i < box.length; i++){
 				if(result !== true){
 					checkDownRightDiagonal(upLeftObj().rowUL, upLeftObj().columnUL);
 				}
+
+				checkDraw(count);
+				switchColor();
 			}
 			else if(box[i+28] !== undefined && box[i+28].style.backgroundColor === ''){
 				box[i+28].style.backgroundColor = color;
-				switchColor();
+				
 				currentBox = box[i+28].id;
 				findPosition(currentBox);
 				selectedBox = Obj();
@@ -87,10 +87,13 @@ for(let i = 0; i < box.length; i++){
 				if(result !== true){
 					checkDownRightDiagonal(upLeftObj().rowUL, upLeftObj().columnUL);
 				}
+
+				checkDraw(count);
+				switchColor();
 			}
 			else if(box[i+21] !== undefined && box[i+21].style.backgroundColor === ''){
 				box[i+21].style.backgroundColor = color;
-				switchColor();
+				
 				currentBox = box[i+21].id;
 				findPosition(currentBox);
 				selectedBox = Obj();
@@ -111,10 +114,13 @@ for(let i = 0; i < box.length; i++){
 				if(result !== true){
 					checkDownRightDiagonal(upLeftObj().rowUL, upLeftObj().columnUL);
 				}
+
+				checkDraw(count);
+				switchColor();
 			}
 			else if(box[i+14] !== undefined && box[i+14].style.backgroundColor === ''){
 				box[i+14].style.backgroundColor = color;
-				switchColor();
+				
 				currentBox = box[i+14].id;
 				findPosition(currentBox);
 				selectedBox = Obj();
@@ -135,10 +141,13 @@ for(let i = 0; i < box.length; i++){
 				if(result !== true){
 					checkDownRightDiagonal(upLeftObj().rowUL, upLeftObj().columnUL);
 				}
+
+				checkDraw(count);
+				switchColor();
 			}
 			else if(box[i+7] !== undefined && box[i+7].style.backgroundColor === ''){
 				box[i+7].style.backgroundColor = color;
-				switchColor();
+				
 				currentBox = box[i+7].id;
 				findPosition(currentBox);
 				selectedBox = Obj();
@@ -159,10 +168,13 @@ for(let i = 0; i < box.length; i++){
 				if(result !== true){
 					checkDownRightDiagonal(upLeftObj().rowUL, upLeftObj().columnUL);
 				}
+
+				checkDraw(count);
+				switchColor();
 			}
 			else{
 				box[i].style.backgroundColor = color;
-				switchColor();
+				
 				currentBox = box[i].id;
 				findPosition(currentBox);
 				selectedBox = Obj();
@@ -183,6 +195,9 @@ for(let i = 0; i < box.length; i++){
 				if(result !== true){
 					checkDownRightDiagonal(upLeftObj().rowUL, upLeftObj().columnUL);
 				}
+
+				checkDraw(count);
+				switchColor();
 			}
 		}
 	});
@@ -206,15 +221,25 @@ function findPosition(str){
 
 function switchColor(){
 	if(color == "green"){
-		color = "red";
+		if(result !== true && gameDraw !== true){
+			color = "red";
+			message.textContent = "It's " + color + " 's Turn";
+			btn1.classList.remove("selected");
+			btn2.classList.add("selected");
+		}
 	}
 	else if(color == "red"){
-		color = "green";
+		if(result !== true && gameDraw !== true){
+			color = "green";
+			message.textContent = "It's " + color + " 's Turn";
+			btn2.classList.remove("selected");
+			btn1.classList.add("selected");
+		}
 	}
 }
 
 function getColor(i,j){
-	if(i < 7 || j < 7){
+	if(i < 6 || j < 7){
 		return document.querySelector("#b" + i + "-" + j).style.backgroundColor;
 	}
 }
@@ -252,7 +277,7 @@ function findUpRight(a, b){
 		while(getColor(a,b) === getColor(a-1,b+1)){
 			a = a-1;
 			b = b+1;
-			if(a >= 0 && b < 6){
+			if(a > 0 && b < 6){
 				findUpRight(a, b);
 			}
 			else{
@@ -311,175 +336,77 @@ function findUpLeft(a, b){
 
 
 function checkLeftSide(a, b){
-	if(getColor(a,b) !== "" &&
-		getColor(a,b) === getColor(a,b-1) &&
-		getColor(a,b) === getColor(a,b-2) && 
-		getColor(a,b) === getColor(a,b-3)
-		){
+	if(b > 2){
+		if(getColor(a,b) !== "" &&
+			getColor(a,b) === getColor(a,b-1) &&
+			getColor(a,b) === getColor(a,b-2) && 
+			getColor(a,b) === getColor(a,b-3)
+			){
 
-		result = true;
+			result = true;
+			winner = color;
+			message.textContent = "Congrats "+ winner + " you won!";
+		}
+		return result;
 	}
-	return result;
 }
 
 function checkDownSide(a, b){
-	if(getColor(a,b) !== "" &&
-		getColor(a,b) === getColor(a+1,b) &&
-		getColor(a,b) === getColor(a+2,b) &&
-		getColor(a,b) === getColor(a+3,b)
-		){
+	if(a < 3){
+		if(getColor(a,b) !== "" &&
+			getColor(a,b) === getColor(a+1,b) &&
+			getColor(a,b) === getColor(a+2,b) &&
+			getColor(a,b) === getColor(a+3,b)
+			){
 
-		result = true;
+			result = true;
+			winner = color;
+			message.textContent = "Congrats "+ winner + " you won!";
+		}
+		return result;
 	}
-	return result;
 }
 
 function checkDownRightDiagonal(a, b){
-	if(getColor(a,b) !== "" &&
-		getColor(a,b) === getColor(a+1,b+1) &&
-		getColor(a,b) === getColor(a+2,b+2) &&
-		getColor(a,b) === getColor(a+3,b+3)
-		){
+	if(a < 3 && b < 4){
+		if(getColor(a,b) !== "" &&
+			getColor(a,b) === getColor(a+1,b+1) &&
+			getColor(a,b) === getColor(a+2,b+2) &&
+			getColor(a,b) === getColor(a+3,b+3)
+			){
 
-		result = true;
+			result = true;
+			winner = color;
+			message.textContent = "Congrats "+ winner + " you won!";
+		}
+		return result;
 	}
-	return result;
 }
 
 function checkDownLeftDiagonal(a, b){
-	if(getColor(a,b) !== "" &&
-		getColor(a,b) === getColor(a+1,b-1) &&
-		getColor(a,b) === getColor(a+2,b-2) && 
-		getColor(a,b) === getColor(a+3,b-3)
-		){
+	if(a < 3 && b > 2){
+		if(getColor(a,b) !== "" &&
+			getColor(a,b) === getColor(a+1,b-1) &&
+			getColor(a,b) === getColor(a+2,b-2) && 
+			getColor(a,b) === getColor(a+3,b-3)
+			){
 
-		result = true;
+			result = true;
+			winner = color;
+			message.textContent = "Congrats "+ winner + " you won!";
+		}
+		return result;
 	}
-	return result;
 }
 
+function checkDraw(i){
+	if(i == 42){
+		gameDraw = true;
+		message.textContent = "Match Draw!";
+	}
+	else{
+		gameDraw = false;
+	}
 
-// findRight(selectedBox.row, selectedBox.column);
-// checkLeftSide(rightObj().row, rightObj().column);
-
-// findUpRight(selectedBox.row, selectedBox.column);
-// checkDownLeftDiagonal(upRightObj().row, upRightObj().column);
-
-// findUpLeft(selectedBox.row, selectedBox.column);
-// checkDownRightDiagonal(upLeftObj().row, upLeftObj().column);
-
-//function decision(row,column){
-// 	for(var row = 1; row <= 7; row++){
-// 		for(var column = 1; column <= 7; column++){
-// 			if(checkRightSide(row,column) == true){
-// 				gameOver = true;
-// 			}
-// 			else if(checkLeftSide(row,column) == true){
-// 				gameOver = true;
-// 			}
-// 			else if(checkUpSide(row,column) == true){
-// 				gameOver = true;
-// 			}
-// 			else if(checkDownSide(row,column) == true){
-// 				gameOver = true;
-// 			}
-// 			else if(checkUpRightDiagonal(row,column) == true){
-// 				gameOver = true;
-// 			}
-// 			else if(checkUpLeftDiagonal(row,column) == true){
-// 				gameOver = true;
-// 			}
-// 			else if(checkDownRightDiagonal(row,column) == true){
-// 				gameOver = true;
-// 			}
-// 			else if(checkDownLeftDiagonal(row,column) == true){
-// 				gameOver = true;
-// 			}
-// 		}
-// 	}
-// }
-
-
-// if(checkRightSide(i,j) ||
-// 		checkLeftSide(i,j) ||
-// 		checkUpSide(i,j) ||
-// 		checkDownSide(i,j) ||
-// 		checkUpRightDiagonal(i,j) ||
-// 		checkUpLeftDiagonal(i,j) ||
-// 		checkDownRightDiagonal(i,j) ||
-// 		checkDownLeftDiagonal(i,j)
-// 		){
-// 		result = true;
-// 	}
-
-		// var box_i_j = document.querySelector("#b"+i+j);
-		// if(box_i_j.style.backgroundColor === box_i_j+1.style.backgroundColor &&
-		// 	box_i_j.style.backgroundColor === box_i_j+2.style.backgroundColor &&
-		// 	box_i_j.style.backgroundColor === box_i_j+3.style.backgroundColor &&
-		// 	box_i_j.style.backgroundColor === box_i_j+4.style.backgroundColor){
-
-		// 	result = true;
-		// }
-		// else if(box_i_j.style.backgroundColor === box_i_j-1.style.backgroundColor &&
-		// 	box_i_j.style.backgroundColor === box_i_j-2.style.backgroundColor &&
-		// 	box_i_j.style.backgroundColor === box_i_j-3.style.backgroundColor &&
-		// 	box_i_j.style.backgroundColor === box_i_j-4.style.backgroundColor){
-			
-		// 	result = true;
-		// }
-		// else if(box_i_j.style.backgroundColor === box[i+1][j].style.backgroundColor &&
-		// 	box_i_j.style.backgroundColor === box[i+2][j].style.backgroundColor &&
-		// 	box_i_j.style.backgroundColor === box[i+3][j].style.backgroundColor &&
-		// 	box_i_j.style.backgroundColor === box[i+4][j].style.backgroundColor){
-			
-		// 	result = true;
-		// }
-		// else if(box[i][j].style.backgroundColor === box[i-1][j].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i-2][j].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i-3][j].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i-4][j].style.backgroundColor){
-			
-		// 	result = true;
-		// }
-		// else if(box[i][j].style.backgroundColor === box[i+1][j+1].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i+2][j+2].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i+3][j+3].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i+4][j+4].style.backgroundColor){
-			
-		// 	result = true;
-		// }
-		// else if(box[i][j].style.backgroundColor === box[i+1][j-1].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i+2][j-2].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i+3][j-3].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i+4][j-4].style.backgroundColor){
-			
-		// 	result = true;
-		// }
-		// else if(box[i][j].style.backgroundColor === box[i-1][j+1].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i-2][j+2].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i-3][j+3].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i-4][j+4].style.backgroundColor){
-			
-		// 	result = true;
-		// }
-		// else if(box[i][j].style.backgroundColor === box[i-1][j-1].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i-2][j-2].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i-3][j-3].style.backgroundColor &&
-		// 	box[i][j].style.backgroundColor === box[i-4][j-4].style.backgroundColor){
-			
-		// 	result = true;
-		// }
-
-// for(i = 0; i < box.length; i++){
-// 	if(box[i].style.backgroundColor === box[i+1].style.backgroundColor &&
-// 		box[i].style.backgroundColor === box[i+2].style.backgroundColor &&
-// 		box[i].style.backgroundColor === box[i+3].style.backgroundColor &&
-// 		box[i].style.backgroundColor === box[i+4].style.backgroundColor){
-
-// 		result = true;
-// 	}
-// }
-
-// if(result === true){
-// 	alert("result yes");
-// }
+	return gameDraw;
+}
