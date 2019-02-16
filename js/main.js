@@ -1,12 +1,8 @@
+var color,result,winner,gameOver,gameDraw,count;
 var box = document.querySelectorAll(".box");
-var result = false;
+
 var currentBox;
 var selectedBox;
-var gameOver = false;
-var gameDraw = false;
-var winner = null;
-var count = 0;
-var color = "green";
 var score1 = 0;
 var score2 = 0;
 var message = document.querySelector(".message");
@@ -14,8 +10,24 @@ var btn1 = document.querySelector(".btn-1");
 var btn2 = document.querySelector(".btn-2");
 var btn1ScoreDisplay = document.querySelector(".btn-score-1");
 var btn2ScoreDisplay = document.querySelector(".btn-score-2");
+var resetBtn = document.querySelector(".reset-btn");
 
-btn1.classList.add("selected");
+var winSound = new Audio('sounds/to-the-point.mp3');
+var drawSound = new Audio('sounds/case-closed.mp3');
+var wrongSound = new Audio('sounds/your-turn.mp3');
+
+function init(){
+ 	result = false;
+ 	gameOver = false;
+ 	gameDraw = false;
+ 	winner = null;
+ 	count = 0;
+ 	color = "green";
+	btn1.classList.add("selected-green");
+	btn2.classList.remove("selected-red");
+}
+
+init();
 
 for(var i = 0; i < box.length; i++){
 	box[i].style.backgroundColor = '';
@@ -24,22 +36,34 @@ for(var i = 0; i < box.length; i++){
 btn1.addEventListener("click",function(){
 	if(count < 1){
 		color = "green";
-		btn1.classList.add("selected");
-		btn2.classList.remove("selected");
+		btn1.classList.add("selected-green");
+		btn2.classList.remove("selected-red");
+		message.textContent = "Start Game!";
+	}
+	else{
+		wrongSound.play();
 	}
 });
 
 btn2.addEventListener("click",function(){
 	if(count < 1){
 		color = "red";
-		btn2.classList.add("selected");
-		btn1.classList.remove("selected");
+		btn2.classList.add("selected-red");
+		btn1.classList.remove("selected-green");
+		message.textContent = "Start Game!";
 	}
+	else{
+		wrongSound.play();
+	}
+});
+
+resetBtn.addEventListener("click",function(){
+	reset();
 });
 
 for(let i = 0; i < box.length; i++){
 	box[i].addEventListener("click",function(){
-		if(result !== true && gameDraw !== true){
+		if(result !== true && gameDraw !== true && checkValid(this)){
 			count++;
 			if(box[i+35] !== undefined && box[i+35].style.backgroundColor == ''){
 				box[i+35].style.backgroundColor = color;
@@ -228,16 +252,16 @@ function switchColor(){
 		if(result !== true && gameDraw !== true){
 			color = "red";
 			message.textContent = "It's " + color + " 's Turn";
-			btn1.classList.remove("selected");
-			btn2.classList.add("selected");
+			btn1.classList.remove("selected-green");
+			btn2.classList.add("selected-red");
 		}
 	}
 	else if(color == "red"){
 		if(result !== true && gameDraw !== true){
 			color = "green";
 			message.textContent = "It's " + color + " 's Turn";
-			btn2.classList.remove("selected");
-			btn1.classList.add("selected");
+			btn2.classList.remove("selected-red");
+			btn1.classList.add("selected-green");
 		}
 	}
 }
@@ -411,8 +435,9 @@ function checkDraw(i){
 	if(i == 42){
 		gameDraw = true;
 		message.textContent = "Match Draw!";
-		btn1.classList.remove("selected");
-		btn2.classList.remove("selected");
+		btn1.classList.remove("selected-green");
+		btn2.classList.remove("selected-red");
+		drawSound.play();
 	}
 	else{
 		gameDraw = false;
@@ -425,10 +450,31 @@ function winnerScore(winner){
 	if(winner === "green"){
 		score1++;
 		btn1ScoreDisplay.textContent = score1;
+		winSound.play();
 	}
 
 	if(winner === "red"){
 		score2++;
 		btn2ScoreDisplay.textContent = score2;
+		winSound.play();
 	}	
+}
+
+function checkValid(x){
+	if(x.style.backgroundColor === "green" || x.style.backgroundColor === "red"){
+		message.textContent = "Invalid! Try An Empty Box";
+		wrongSound.play();
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
+function reset(){
+	for(var i = 0; i < box.length; i++){
+		box[i].style.backgroundColor = '';
+	}
+	message.textContent = "Start Again! [green by default]";
+	init();
 }
