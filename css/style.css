@@ -130,7 +130,7 @@ table {
 .selected-red {
 	border-right: none;
 	border-left: none;
-	border-bottom: 5px solid red;
+	border-bottom: 7px solid red;
 }
 
 /*#fce205*/
