@@ -251,7 +251,7 @@ function switchColor(){
 	if(color == "green"){
 		if(result !== true && gameDraw !== true){
 			color = "red";
-			message.textContent = "It's " + color + " 's Turn";
+			message.textContent = "It's " + color.toUpperCase() + " 's Turn";
 			btn1.classList.remove("selected-green");
 			btn2.classList.add("selected-red");
 		}
@@ -259,7 +259,7 @@ function switchColor(){
 	else if(color == "red"){
 		if(result !== true && gameDraw !== true){
 			color = "green";
-			message.textContent = "It's " + color + " 's Turn";
+			message.textContent = "It's " + color.toUpperCase() + " 's Turn";
 			btn2.classList.remove("selected-red");
 			btn1.classList.add("selected-green");
 		}
@@ -373,7 +373,7 @@ function checkLeftSide(a, b){
 
 			result = true;
 			winner = color;
-			message.textContent = "Congrats "+ winner + " you won!";
+			message.textContent = "Congrats "+ winner.toUpperCase() + " you won!";
 			winnerScore(winner);
 		}
 		return result;
@@ -390,7 +390,7 @@ function checkDownSide(a, b){
 
 			result = true;
 			winner = color;
-			message.textContent = "Congrats "+ winner + " you won!";
+			message.textContent = "Congrats "+ winner.toUpperCase() + " you won!";
 			winnerScore(winner);
 		}
 		return result;
@@ -407,7 +407,7 @@ function checkDownRightDiagonal(a, b){
 
 			result = true;
 			winner = color;
-			message.textContent = "Congrats "+ winner + " you won!";
+			message.textContent = "Congrats "+ winner.toUpperCase() + " you won!";
 			winnerScore(winner);
 		}
 		return result;
@@ -424,7 +424,7 @@ function checkDownLeftDiagonal(a, b){
 
 			result = true;
 			winner = color;
-			message.textContent = "Congrats "+ winner + " you won!";
+			message.textContent = "Congrats "+ winner.toUpperCase() + " you won!";
 			winnerScore(winner);
 		}
 		return result;
@@ -432,7 +432,7 @@ function checkDownLeftDiagonal(a, b){
 }
 
 function checkDraw(i){
-	if(i == 42){
+	if(i == 42 && result !== true){
 		gameDraw = true;
 		message.textContent = "Match Draw!";
 		btn1.classList.remove("selected-green");
@@ -475,6 +475,6 @@ function reset(){
 	for(var i = 0; i < box.length; i++){
 		box[i].style.backgroundColor = '';
 	}
-	message.textContent = "Start Again! [green by default]";
+	message.textContent = "Start Again! [GREEN by default]";
 	init();
 }
