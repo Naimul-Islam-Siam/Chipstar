@@ -11,4 +11,4 @@ The game is built on html,css & vanila javaScript.
 
 Play The Game here : https://naimul-islam-siam.github.io/Chipstar/
 
-My mate Debashish Sarker Joy helped me a lot building this cool project.
+My mate Debashish Sarker Joy helped me to solve a problem building this cool project.
