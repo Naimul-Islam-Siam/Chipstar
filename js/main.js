@@ -40,7 +40,18 @@ btn1.addEventListener("click",function(){
 		btn2.classList.remove("selected-red");
 		message.textContent = "Start Game!";
 	}
-	else{
+
+	if(gameDraw === true){
+		message.textContent = "Match Draw!";
+		wrongSound.play();
+	}
+
+	if(result === true){
+		wrongSound.play();
+	}
+
+	if(count > 0 && result === false && gameDraw === false){
+		message.textContent = "Match is going on!";
 		wrongSound.play();
 	}
 });
@@ -52,7 +63,18 @@ btn2.addEventListener("click",function(){
 		btn1.classList.remove("selected-green");
 		message.textContent = "Start Game!";
 	}
-	else{
+
+	if(gameDraw === true){
+		message.textContent = "Match Draw!";
+		wrongSound.play();
+	}
+
+	if(result === true){
+		wrongSound.play();
+	}
+
+	if(count > 0 && result === false && gameDraw === false){
+		message.textContent = "Match is going on!";
 		wrongSound.play();
 	}
 });
@@ -228,6 +250,13 @@ for(let i = 0; i < box.length; i++){
 				switchColor();
 			}
 		}
+		else if(result === true){
+			message.textContent = color.toUpperCase() + " already won!";
+			wrongSound.play();
+		}
+		else if(gameDraw === true){
+			wrongSound.play();
+		}
 	});
 }
 
@@ -252,6 +281,7 @@ function switchColor(){
 		if(result !== true && gameDraw !== true){
 			color = "red";
 			message.textContent = "It's " + color.toUpperCase() + " 's Turn";
+			message.style.fontSize = "15px";
 			btn1.classList.remove("selected-green");
 			btn2.classList.add("selected-red");
 		}
@@ -260,6 +290,7 @@ function switchColor(){
 		if(result !== true && gameDraw !== true){
 			color = "green";
 			message.textContent = "It's " + color.toUpperCase() + " 's Turn";
+			message.style.fontSize = "15px";
 			btn2.classList.remove("selected-red");
 			btn1.classList.add("selected-green");
 		}
@@ -374,6 +405,7 @@ function checkLeftSide(a, b){
 			result = true;
 			winner = color;
 			message.textContent = "Congrats "+ winner.toUpperCase() + " you won!";
+			message.style.fontSize = "15px";
 			winnerScore(winner);
 		}
 		return result;
@@ -391,6 +423,7 @@ function checkDownSide(a, b){
 			result = true;
 			winner = color;
 			message.textContent = "Congrats "+ winner.toUpperCase() + " you won!";
+			message.style.fontSize = "15px";
 			winnerScore(winner);
 		}
 		return result;
@@ -408,6 +441,7 @@ function checkDownRightDiagonal(a, b){
 			result = true;
 			winner = color;
 			message.textContent = "Congrats "+ winner.toUpperCase() + " you won!";
+			message.style.fontSize = "15px";
 			winnerScore(winner);
 		}
 		return result;
@@ -425,6 +459,7 @@ function checkDownLeftDiagonal(a, b){
 			result = true;
 			winner = color;
 			message.textContent = "Congrats "+ winner.toUpperCase() + " you won!";
+			message.style.fontSize = "15px";
 			winnerScore(winner);
 		}
 		return result;
@@ -435,6 +470,7 @@ function checkDraw(i){
 	if(i == 42 && result !== true){
 		gameDraw = true;
 		message.textContent = "Match Draw!";
+		message.style.fontSize = "15px";
 		btn1.classList.remove("selected-green");
 		btn2.classList.remove("selected-red");
 		drawSound.play();
@@ -463,6 +499,7 @@ function winnerScore(winner){
 function checkValid(x){
 	if(x.style.backgroundColor === "green" || x.style.backgroundColor === "red"){
 		message.textContent = "Invalid! Try An Empty Box";
+		message.style.fontSize = "15px";
 		wrongSound.play();
 		return false;
 	}
@@ -476,5 +513,6 @@ function reset(){
 		box[i].style.backgroundColor = '';
 	}
 	message.textContent = "Start Again! [GREEN by default]";
+	message.style.fontSize = "15px";
 	init();
 }
