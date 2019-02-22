@@ -12,8 +12,8 @@ var btn1ScoreDisplay = document.querySelector(".btn-score-1");
 var btn2ScoreDisplay = document.querySelector(".btn-score-2");
 var resetBtn = document.querySelector(".reset-btn");
 
-var winSound = new Audio('sounds/to-the-point.mp3');
-var drawSound = new Audio('sounds/case-closed.mp3');
+var winSound = new Audio('sounds/winSound.mp3');
+var drawSound = new Audio('sounds/drawSound.mp3');
 var wrongSound = new Audio('sounds/your-turn.mp3');
 
 function init(){
