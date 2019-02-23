@@ -133,6 +133,11 @@ table {
 	border-bottom: 7px solid red;
 }
 
+.marker {
+	filter: brightness(350%);
+	transition: filter 1s;
+}
+
 /*#fce205*/
 /*#ff5e31*/
 /*#e33d5e*/
