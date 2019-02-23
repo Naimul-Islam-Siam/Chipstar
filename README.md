@@ -11,4 +11,14 @@ The game is built on html,css & vanila javaScript.
 
 Play The Game here : https://naimul-islam-siam.github.io/Chipstar/
 
+Mobile Application for this game : https://github.com/Naimul-Islam-Siam/Chipstar-App/
+
+You can Download the app for android and windows mobile platform.
+
+Download The Android App : https://drive.google.com/open?id=1Ft6-_jn2jmpDroeTc_v8eBEDXyjjq-Cm
+
+Download The Windows App : https://drive.google.com/open?id=1iIOpbmGHntj9sFrFqZwGGbcF-Qqc19NT
+
 My mate Debashish Sarker Joy helped me to solve a problem building this cool project.
+
+And Molla Zihan Uddin designed & made the cool logo for this project.
