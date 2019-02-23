@@ -12,6 +12,7 @@ var btn1ScoreDisplay = document.querySelector(".btn-score-1");
 var btn2ScoreDisplay = document.querySelector(".btn-score-2");
 var resetBtn = document.querySelector(".reset-btn");
 
+var tickSound = new Audio('sounds/click.mp3');
 var winSound = new Audio('sounds/winSound.mp3');
 var drawSound = new Audio('sounds/drawSound.mp3');
 var wrongSound = new Audio('sounds/your-turn.mp3');
@@ -89,6 +90,7 @@ for(let i = 0; i < box.length; i++){
 			count++;
 			if(box[i+35] !== undefined && box[i+35].style.backgroundColor == ''){
 				box[i+35].style.backgroundColor = color;
+				tickSound.play();
 
 				currentBox = box[i+35].id;
 				findPosition(currentBox);
@@ -116,6 +118,7 @@ for(let i = 0; i < box.length; i++){
 			}
 			else if(box[i+28] !== undefined && box[i+28].style.backgroundColor === ''){
 				box[i+28].style.backgroundColor = color;
+				tickSound.play();
 				
 				currentBox = box[i+28].id;
 				findPosition(currentBox);
@@ -143,6 +146,7 @@ for(let i = 0; i < box.length; i++){
 			}
 			else if(box[i+21] !== undefined && box[i+21].style.backgroundColor === ''){
 				box[i+21].style.backgroundColor = color;
+				tickSound.play();
 				
 				currentBox = box[i+21].id;
 				findPosition(currentBox);
@@ -170,6 +174,7 @@ for(let i = 0; i < box.length; i++){
 			}
 			else if(box[i+14] !== undefined && box[i+14].style.backgroundColor === ''){
 				box[i+14].style.backgroundColor = color;
+				tickSound.play();
 				
 				currentBox = box[i+14].id;
 				findPosition(currentBox);
@@ -197,6 +202,7 @@ for(let i = 0; i < box.length; i++){
 			}
 			else if(box[i+7] !== undefined && box[i+7].style.backgroundColor === ''){
 				box[i+7].style.backgroundColor = color;
+				tickSound.play();
 				
 				currentBox = box[i+7].id;
 				findPosition(currentBox);
@@ -224,6 +230,7 @@ for(let i = 0; i < box.length; i++){
 			}
 			else{
 				box[i].style.backgroundColor = color;
+				tickSound.play();
 				
 				currentBox = box[i].id;
 				findPosition(currentBox);
@@ -518,7 +525,7 @@ function winnerScore(winner){
 
 function checkValid(x){
 	if(x.style.backgroundColor === "green" || x.style.backgroundColor === "red"){
-		message.textContent = "Invalid! Try An Empty Box";
+		message.textContent = "Invalid! Try An Empty Circle";
 		message.style.fontSize = "15px";
 		wrongSound.play();
 		return false;
